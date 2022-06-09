@@ -6,4 +6,5 @@ public class Constants {
     public final static String ROLE = "role";
     public final static String AUTHORIZATION_HEADER = "Authorization";
     public final static String BEARER_TOKEN = "Bearer ";
+
 }

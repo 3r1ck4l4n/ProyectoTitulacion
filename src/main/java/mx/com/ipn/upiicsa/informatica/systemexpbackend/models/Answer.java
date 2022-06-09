@@ -1,15 +1,23 @@
 package mx.com.ipn.upiicsa.informatica.systemexpbackend.models;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 
+@NoArgsConstructor
 @Entity
 @Table(name = "answers")
 public class Answer {
+
+    public Answer(String answerStatement, BigDecimal certainFactor) {
+        this.answerStatement = answerStatement;
+        this.certainFactor = certainFactor;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,8 +36,9 @@ public class Answer {
     @Column(name = "certain_factor")
     private BigDecimal certainFactor;
 
-    @Getter
+    @JsonBackReference(value = "Question-Answer")
     @Setter
-    @Column(name = "idQuestion")
-    private Integer idQuestion;
+    @ManyToOne
+    @JoinColumn(name = "id_question")
+    private Question question;
 }

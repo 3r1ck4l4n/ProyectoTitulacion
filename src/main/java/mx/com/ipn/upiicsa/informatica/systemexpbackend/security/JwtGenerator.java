@@ -7,6 +7,9 @@ import mx.com.ipn.upiicsa.informatica.systemexpbackend.constants.Constants;
 import mx.com.ipn.upiicsa.informatica.systemexpbackend.dto.JwtUser;
 import org.springframework.stereotype.Component;
 
+import java.time.Instant;
+import java.util.Date;
+
 @Component
 public class JwtGenerator {
 

@@ -1,5 +1,7 @@
 package mx.com.ipn.upiicsa.informatica.systemexpbackend.configurations;
 
+import io.jsonwebtoken.ExpiredJwtException;
+import lombok.var;
 import mx.com.ipn.upiicsa.informatica.systemexpbackend.security.JwtAuthTokenFilter;
 import mx.com.ipn.upiicsa.informatica.systemexpbackend.security.JwtAuthenticationEntryPoint;
 import mx.com.ipn.upiicsa.informatica.systemexpbackend.security.JwtAuthenticationProvider;
@@ -10,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -17,8 +20,10 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.stereotype.Component;
+import org.springframework.web.cors.CorsConfiguration;
 
 import java.util.Collections;
+import java.util.List;
 
 @Component
 @EnableWebSecurity
@@ -26,6 +31,9 @@ import java.util.Collections;
 public class JwtSecurityConfig extends WebSecurityConfigurerAdapter {
 
     Logger logger = LoggerFactory.getLogger(JwtSecurityConfig.class);
+
+
+
     @Autowired
     JwtAuthenticationProvider jwtAuthenticationProvider;
 
@@ -49,6 +57,7 @@ public class JwtSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+
         http.csrf().disable()
                 .authorizeRequests().antMatchers("**/api/**").authenticated()
                 .and()
@@ -59,5 +68,9 @@ public class JwtSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.addFilterBefore(jwtAuthTokenFilter(), UsernamePasswordAuthenticationFilter.class);
         http.headers().cacheControl();
+
+        http.cors();
     }
+
+
 }
